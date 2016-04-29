@@ -1,0 +1,28 @@
+site:
+  build: sitenginx
+  ports:
+   - "80:80"
+  volumes:
+   - /MAPYOURLOCALVOLUME:/html
+  links:
+   - php
+
+database:
+  image: mariadb:10.1
+  ports:
+   - "3306:3306"  
+  environment:
+     - MYSQL_ROOT_PASSWORD=**MODIFY HERE**
+     - MYSQL_DATABASE=**HERE**
+     - MYSQL_USER=admin
+     - MYSQL_PASSWORD=**HERE**
+
+php:
+  build: magentophp7
+  ports:
+   - "9000:9000"
+  volumes:
+   - /MAPYOURLOCALVOLUME:/html
+   - /ramdrive:/ramdrive
+  links:
+   - database
